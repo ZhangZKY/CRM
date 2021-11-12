@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+
+    <!-- 导入属性配置文件 -->
+    <properties resource="JDBC.properties"></properties>
+
+
+    <!-- 设置日志输出 -->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+
+
+
+    <!-- 自定义resultType别名 -->
+    <typeAliases>
+        <package name="com.zky.crm.settings.domain"/>
+        <package name="com.zky.crm.workbench.domain"/>
+    </typeAliases>
+
+
+
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+
+        </environment>
+    </environments>
+
+
+    <!-- sql映射文件地址 -->
+    <mappers>
+        <package name="com.zky.crm.settings.dao"/>
+        <package name="com.zky.crm.workbench.dao"/>
+    </mappers>
+
+</configuration>

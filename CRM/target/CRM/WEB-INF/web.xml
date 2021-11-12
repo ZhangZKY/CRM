@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+
+<!--
+  &lt;!&ndash; 注册DispatcherServlet对象,创建SpringMVC容器对象 &ndash;&gt;
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:SpringMVC-Servlet.xml</param-value>
+    </init-param>
+
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+-->
+<!--
+
+  &lt;!&ndash; 注册DispatcherServlet对象映射名称 &ndash;&gt;
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+-->
+
+
+
+<!--
+
+  &lt;!&ndash; 注册全局作用域加载监听器，创建Spring容器对象 &ndash;&gt;
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+&lt;!&ndash;
+  &lt;!&ndash; 更改全局作用域加载Listener默认的读取配置文件地址&ndash;&gt;
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:ApplicationContext.xml</param-value>
+  </context-param>
+&ndash;&gt;
+
+
+
+
+
+-->
+    <!--过滤器拦截非法登录-->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.zky.crm.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <!--过滤器设置编码格式-->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.zky.crm.web.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    
+    <!--监听器-监听全局作用域对象创建-->
+    <listener>
+        <listener-class>com.zky.crm.web.listener.SysInitListener</listener-class>
+    </listener>
+    
+
+
+    <!--用户登录-->
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>com.zky.crm.settings.web.controller.UserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/settings/user/login.do</url-pattern>
+    </servlet-mapping>
+
+    <!--市场活动-->
+    <servlet>
+        <servlet-name>ActivityController</servlet-name>
+        <servlet-class>com.zky.crm.workbench.web.controller.ActivityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActivityController</servlet-name>
+        <url-pattern>/workbench/activity/getUserList.do</url-pattern>
+        <url-pattern>/workbench/activity/saveActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/pageList.do</url-pattern>
+        <url-pattern>/workbench/activity/deleteList.do</url-pattern>
+        <url-pattern>/workbench/activity/getActivityUserListByid.do</url-pattern>
+        <url-pattern>/workbench/activity/updateActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/detail.do</url-pattern>
+        <url-pattern>/workbench/activity/remark.do</url-pattern>
+
+
+    </servlet-mapping>
+
+
+
+
+    <!--潜在客户-->
+    <servlet>
+        <servlet-name>ClueController</servlet-name>
+        <servlet-class>com.zky.crm.workbench.web.controller.ClueController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClueController</servlet-name>
+        <url-pattern>/workbench/clue/getUserList.do</url-pattern>
+        <url-pattern>/workbench/clue/saveClue.do</url-pattern>
+        <url-pattern>/workbench/clue/pageList.do</url-pattern>
+        <url-pattern>/workbench/clue/detail.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityByClueID.do</url-pattern>
+        <url-pattern>/workbench/clue/deleteRelation.do</url-pattern>
+        <url-pattern>/workbench/clue/getAcivityList.do</url-pattern>
+        <url-pattern>/workbench/clue/addRelation.do</url-pattern>
+        <url-pattern>/workbench/clue/getAcivityListByName.do</url-pattern>
+        <url-pattern>/workbench/clue/convert.do</url-pattern>
+
+
+    </servlet-mapping>
+
+
+
+
+
+<!--
+    &lt;!&ndash;注册过滤器，在过滤器中设置request和response字符编码&ndash;&gt;
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+
+        &lt;!&ndash;过滤器有三个参数：encoding、forceRequestEncoding、forceResposeEncoding&ndash;&gt;
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceRequestEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceResposeEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    &lt;!&ndash;强制所有文件先通过指定过滤器进行过滤&ndash;&gt;
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+-->
+
+</web-app>
+
+
